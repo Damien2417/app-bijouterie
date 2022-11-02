@@ -26,6 +26,11 @@
 .table tbody tr:last-of-type 
   border-bottom: 2px solid #4459E8
 
+.table tbody tr:first-of-type 
+  position: sticky
+  top: 0
+  z-index: 1
+
 .table tbody tr.active-row 
   font-weight: bold
   color: #4459E8
@@ -33,8 +38,13 @@
 .overflow
   overflow: auto
   height: 75vh
+  width: auto
+  margin-top: 1vh
 input
   color: #965fa3
   background-color: transparent
   font-size: 0.83em
   font-weight: bold
+  
+.lock
+  margin-right: auto 

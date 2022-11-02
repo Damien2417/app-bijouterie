@@ -4,8 +4,8 @@ import styles from './styles.module.sass'
 
 type Image = PropsWithChildren<React.ImgHTMLAttributes<HTMLImageElement>>
 
-export function Image({ srcImage }: Image) {
+export function Image({ srcImage, func }: Image) {
   return (
-    <img src={srcImage} className={styles.icon}/>
+    <img src={srcImage} onClick={func}className={styles.icon}/>
   )
 }
