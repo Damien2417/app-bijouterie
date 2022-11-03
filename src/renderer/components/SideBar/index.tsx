@@ -1,15 +1,11 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import {  NavigateFunction } from 'react-router-dom'
-
-import styles from './styles.module.sass'
 import { SideBarContainer, SideBarButton, Image } from 'renderer/components'
-
 
 export function SideBar({ navigate } : NavigateFunction) {
   return (
     <SideBarContainer>
         <nav>
-         
           <SideBarButton onClick={() => navigate('clients')}>
             <Image srcImage='userIcon.png'> </Image>
             &nbsp;&nbsp;Clients
@@ -18,7 +14,6 @@ export function SideBar({ navigate } : NavigateFunction) {
             <Image srcImage='userIcon.png'> </Image>
             &nbsp;&nbsp;Ventes
           </SideBarButton>
-          
         </nav>
     </SideBarContainer>
   )

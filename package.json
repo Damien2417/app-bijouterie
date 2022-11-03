@@ -1,13 +1,13 @@
 {
-  "displayName": "My Awesome Electron App",
-  "name": "my-awesome-electron-app",
-  "description": "Your awesome app description",
-  "version": "2.0.2",
+  "displayName": "App Bijouterie",
+  "name": "app-bijouterie",
+  "description": "Gestion de la boutique",
+  "version": "0.0.0",
   "main": "./node_modules/.dev/main/index.js",
   "resources": "src/resources",
   "author": {
-    "name": "Dalton Menezes",
-    "email": "daltonmenezes@outlook.com"
+    "name": "Damien Bukudjian",
+    "email": "damienbuk@live.fr"
   },
   "license": "MIT",
   "scripts": {

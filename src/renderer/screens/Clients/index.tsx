@@ -19,6 +19,12 @@ export function ClientScreen() {
   const [clientsFromDB, setArray] = useState([])
   const [lock, setLock] = useState(true);
 
+  const handleSearch = (event) => {
+    socket.emit("querySearch",event.target.value, function (response) {
+      setArray(response)
+    })
+  };
+
   function lockArray() {
       setLock(!lock)
   }
@@ -76,8 +82,6 @@ export function ClientScreen() {
     };
   }, [clientsFromDB])
 
-
-
   function openAboutWindow() {
     App.createAboutWindow()
     store.setAboutWindowState(true)
@@ -93,13 +97,17 @@ export function ClientScreen() {
     }]
     setArray([...clientsFromDB, ...rowsInput])
   }
-  
-
   return (
       <Container>
         <Container>
           <h2>Vos clients</h2>
-          <Image srcImage={lock?"lock.png":"unlock.png"} className={styles.lock} func={lockArray}> </Image>
+          <div className={styles.arrayControls}>
+            <Container>
+              <input type="text" onChange={handleSearch}></input>
+              <div className={styles.icon} onClick={(lockArray)}>{lock ? "🔒" : "🔓"}</div>
+            </Container>
+          </div>
+          
           <div className={styles.overflow}>
             <ClientsArray lock={lock} clients={clientsFromDB}/>
           </div>
