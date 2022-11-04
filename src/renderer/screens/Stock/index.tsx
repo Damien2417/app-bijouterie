@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom'
-import { useEffect, useState, useContext, useCallback } from 'react'
-import { SocketContext } from 'shared/constants'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { Button, Container } from 'renderer/components'
 import styles from 'renderer/components/ClientsArray/styles.module.sass'
-import { Container, ClientsArray, Button, Image} from 'renderer/components'
 import { useWindowStore } from 'renderer/store'
+import { SocketContext } from 'shared/constants'
+import { StockArray } from '../../components/StockArray'
 
 // The "App" comes from the context bridge in preload/index.ts
 const { App } = window;
@@ -12,15 +12,15 @@ const { App } = window;
   console.log(response) // Affichera 'pong'
 }*/
 
-export function ClientScreen() {
+export function StockScreen() {
   //const navigate = useNavigate()
   const store = useWindowStore().about;
   const socket = useContext(SocketContext);
-  const [clientsFromDB, setArray] = useState([])
+  const [stockFromDB, setArray] = useState([])
   const [lock, setLock] = useState(true);
 
   const handleSearch = (event) => {
-    socket.emit("querySearchClients",event.target.value, function (response) {
+    socket.emit("querySearchStock",event.target.value, function (response) {
       setArray(response);
     });
   };
@@ -29,9 +29,9 @@ export function ClientScreen() {
       setLock(!lock);
   }
   
-  const addClient = useCallback((response) => {
+  const addStock = useCallback((response) => {
     let check = false;
-      setArray(clientsFromDB.map(item => {
+      setArray(stockFromDB.map(item => {
         if (item.id == response.id){ 
           check = true;
           return response;
@@ -39,26 +39,26 @@ export function ClientScreen() {
         return item;
       }))
       if(!check){
-        setArray(clientsFromDB => [...clientsFromDB, response]);
+        setArray(stockFromDB => [...stockFromDB, response]);
       }
-  }, [clientsFromDB]);
+  }, [stockFromDB]);
 
   const deleteRowByIndex = useCallback((response) => {
-    setArray(clientsFromDB => {
-      return clientsFromDB.filter((value, i) => i != response);
+    setArray(stockFromDB => {
+      return stockFromDB.filter((value, i) => i != response);
     });
-  }, [clientsFromDB]);
+  }, [stockFromDB]);
 
   const deleteRowById = useCallback((response) => {
-    setArray(clientsFromDB => {
-      return clientsFromDB.filter((value) => value.id != response.id);
+    setArray(stockFromDB => {
+      return stockFromDB.filter((value) => value.id != response.id);
     });
-  }, [clientsFromDB]);
+  }, [stockFromDB]);
 
 
   useEffect(() => {
     //App.sayHelloFromBridge()
-    socket.emit("getClients",999, function (response) {
+    socket.emit("getStock",999, function (response) {
         setArray(response);
     });
 
@@ -69,17 +69,17 @@ export function ClientScreen() {
   }, [socket])
 
   useEffect(() => {
-    socket.on("addClient", addClient);
+    socket.on("addStock", addStock);
     socket.on("deleteRowByIndex", deleteRowByIndex);
     socket.on("deleteRowById", deleteRowById);
     return () => {
       // before the component is destroyed
       // unbind all event handlers used in this component
-      socket.off("addClient", addClient);
+      socket.off("addStock", addStock);
       socket.off("deleteRowByIndex", deleteRowByIndex);
       socket.off("deleteRowById", deleteRowById);
     };
-  }, [clientsFromDB])
+  }, [stockFromDB])
 
   function openAboutWindow() {
     App.createAboutWindow();
@@ -94,12 +94,12 @@ export function ClientScreen() {
       adresse:'',
       telephone:''
     }];
-    setArray([...clientsFromDB, ...rowsInput]);
+    setArray([...stockFromDB, ...rowsInput]);
   }
   return (
       <Container>
         <Container>
-          <h2>Vos clients</h2>
+          <h2>Votre stock</h2>
           <div className={styles.arrayControls}>
             <Container>
               <input type="text" onChange={handleSearch}></input>
@@ -108,7 +108,7 @@ export function ClientScreen() {
           </div>
           
           <div className={styles.overflow}>
-            <ClientsArray lock={lock} clients={clientsFromDB}/>
+            <StockArray lock={lock} stock={stockFromDB}/>
           </div>
           <Button onClick={addEmptyRow}>Ajouter</Button>
         </Container>

@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom'
-import { useEffect, useState, useContext, useCallback } from 'react'
-import { SocketContext } from 'shared/constants'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { Button, Container } from 'renderer/components'
 import styles from 'renderer/components/ClientsArray/styles.module.sass'
-import { Container, ClientsArray, Button, Image} from 'renderer/components'
 import { useWindowStore } from 'renderer/store'
+import { SocketContext } from 'shared/constants'
+import { VentesArray } from '../../components/VentesArray'
+import { useNavigate } from 'react-router-dom'
 
 // The "App" comes from the context bridge in preload/index.ts
 const { App } = window;
@@ -12,15 +13,15 @@ const { App } = window;
   console.log(response) // Affichera 'pong'
 }*/
 
-export function ClientScreen() {
+export function VentesScreen() {
   //const navigate = useNavigate()
   const store = useWindowStore().about;
   const socket = useContext(SocketContext);
-  const [clientsFromDB, setArray] = useState([])
+  const [ventesFromDB, setArray] = useState([])
   const [lock, setLock] = useState(true);
 
   const handleSearch = (event) => {
-    socket.emit("querySearchClients",event.target.value, function (response) {
+    socket.emit("querySearchVentes",event.target.value, function (response) {
       setArray(response);
     });
   };
@@ -29,9 +30,9 @@ export function ClientScreen() {
       setLock(!lock);
   }
   
-  const addClient = useCallback((response) => {
+  const addVentes = useCallback((response) => {
     let check = false;
-      setArray(clientsFromDB.map(item => {
+      setArray(ventesFromDB.map(item => {
         if (item.id == response.id){ 
           check = true;
           return response;
@@ -39,27 +40,28 @@ export function ClientScreen() {
         return item;
       }))
       if(!check){
-        setArray(clientsFromDB => [...clientsFromDB, response]);
+        setArray(ventesFromDB => [...ventesFromDB, response]);
       }
-  }, [clientsFromDB]);
+  }, [ventesFromDB]);
 
   const deleteRowByIndex = useCallback((response) => {
-    setArray(clientsFromDB => {
-      return clientsFromDB.filter((value, i) => i != response);
+    setArray(ventesFromDB => {
+      return ventesFromDB.filter((value, i) => i != response);
     });
-  }, [clientsFromDB]);
+  }, [ventesFromDB]);
 
   const deleteRowById = useCallback((response) => {
-    setArray(clientsFromDB => {
-      return clientsFromDB.filter((value) => value.id != response.id);
+    setArray(ventesFromDB => {
+      return ventesFromDB.filter((value) => value.id != response.id);
     });
-  }, [clientsFromDB]);
+  }, [ventesFromDB]);
 
 
   useEffect(() => {
     //App.sayHelloFromBridge()
-    socket.emit("getClients",999, function (response) {
+    socket.emit("getVentes",999, function (response) {
         setArray(response);
+        console.log(response);
     });
 
     App.whenAboutWindowClose(({ message }) => {
@@ -69,17 +71,17 @@ export function ClientScreen() {
   }, [socket])
 
   useEffect(() => {
-    socket.on("addClient", addClient);
+    socket.on("addVentes", addVentes);
     socket.on("deleteRowByIndex", deleteRowByIndex);
     socket.on("deleteRowById", deleteRowById);
     return () => {
       // before the component is destroyed
       // unbind all event handlers used in this component
-      socket.off("addClient", addClient);
+      socket.off("addVentes", addVentes);
       socket.off("deleteRowByIndex", deleteRowByIndex);
       socket.off("deleteRowById", deleteRowById);
     };
-  }, [clientsFromDB])
+  }, [ventesFromDB])
 
   function openAboutWindow() {
     App.createAboutWindow();
@@ -94,23 +96,23 @@ export function ClientScreen() {
       adresse:'',
       telephone:''
     }];
-    setArray([...clientsFromDB, ...rowsInput]);
+    setArray([...ventesFromDB, ...rowsInput]);
   }
+  const navigate = useNavigate()
   return (
       <Container>
         <Container>
-          <h2>Vos clients</h2>
+          <h2>Vos ventes</h2>
           <div className={styles.arrayControls}>
             <Container>
               <input type="text" onChange={handleSearch}></input>
-              <div className={styles.icon} onClick={(lockArray)}>{lock ? "🔒" : "🔓"}</div>
             </Container>
           </div>
           
           <div className={styles.overflow}>
-            <ClientsArray lock={lock} clients={clientsFromDB}/>
+            <VentesArray ventes={ventesFromDB}/>
           </div>
-          <Button onClick={addEmptyRow}>Ajouter</Button>
+          <Button onClick={() => navigate('/anotherScreen')}>Ajouter</Button>
         </Container>
       </Container>
   )

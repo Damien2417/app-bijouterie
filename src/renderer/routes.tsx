@@ -1,6 +1,6 @@
 import { useNavigate, Route, Routes } from 'react-router-dom'
 
-import { MainScreen, AnotherScreen, ClientScreen } from 'renderer/screens'
+import { MainScreen, StockScreen, ClientScreen, VentesScreen, AnotherScreen } from 'renderer/screens'
 import { SideBar } from 'renderer/components'
 
 export function AppRoutes() {
@@ -9,8 +9,10 @@ export function AppRoutes() {
         <SideBar navigate={useNavigate()}></SideBar>
         <Routes>
           <Route path="/" element={<MainScreen />} />
-          <Route path="/anotherScreen" element={<AnotherScreen />} />
+          <Route path="/stock" element={<StockScreen />} />
           <Route path="/clients" element={<ClientScreen />} />
+          <Route path="/ventes" element={<VentesScreen />} />
+          <Route path="/anotherScreen" element={<AnotherScreen />} />
         </Routes>
       </>
   )

@@ -10,7 +10,11 @@ export function SideBar({ navigate } : NavigateFunction) {
             <Image srcImage='userIcon.png'> </Image>
             &nbsp;&nbsp;Clients
           </SideBarButton>
-          <SideBarButton onClick={() => navigate('anotherScreen')}>
+          <SideBarButton onClick={() => navigate('stock')}>
+            <Image srcImage='userIcon.png'> </Image>
+            &nbsp;&nbsp;Stock
+          </SideBarButton>
+          <SideBarButton onClick={() => navigate('ventes')}>
             <Image srcImage='userIcon.png'> </Image>
             &nbsp;&nbsp;Ventes
           </SideBarButton>
