@@ -56,7 +56,7 @@ const StockItem: React.FC<Stock> = ({lock, index, id, nom, quantite}: Stock) => 
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            if(idI && nomI.length<1 && quantite.toString().length<1){
+            if(idI && nomI.length<1){
                 console.log("suppression stock...");
                 socket.emit("deleteStock",{id:idI}, function (response) {
                     if(response){
