@@ -1,26 +1,7 @@
 <h1 align="center"><img src="./docs/images/bullet.svg" width="19" /> Electron App</h1>
 
-<p align="center">💅 A <strong>fast</strong> and <strong>ready-to-go</strong> with a <strong>well-thought-out structure</strong> Electron app boilerplate with ReactJS, TypeScript, CSS / SASS modules, Electron Vite, Eslint, Prettier, <strong>GitHub Action releases</strong> and more.
-  <br/><br/>
-  <!-- Patreon -->
-  <a href="https://www.patreon.com/daltonmenezes">
-    <img alt="patreon url" src="https://img.shields.io/badge/support%20on-patreon-1C1E26?style=for-the-badge&labelColor=1C1E26&color=B181F1"/>
-  </a>
-  <!-- Version -->
-  <a href="https://github.com/daltonmenezes/electron-app/releases">
-     <img alt="releases url" src="https://img.shields.io/github/v/release/daltonmenezes/electron-app?style=for-the-badge&labelColor=1C1E26&color=F28BA9"/>
-  </a>  
-  <!-- License -->
-  <a href="https://github.com/daltonmenezes/electron-app/blob/main/LICENSE">
-    <img alt="license url" src="https://img.shields.io/badge/license%20-MIT-1C1E26?style=for-the-badge&labelColor=1C1E26&color=61ffca"/>
-  </a>
-</p>
+Jeweler managing app with react.
 
-<p align="center">
-  <a href="#electron-app">
-    <img alt="preview" src="./docs/images/preview.png" >
-  </a>
-</p>
 
 # <img src="./docs/images/bullet.svg" width="19" /> Features
 - **Stands out**
@@ -97,9 +78,7 @@ Then, enter the new version of your app, so it will produce the following binari
   - `Mac` &#8594; `.zip (app)`, `.dmg`
   - `Linux` &#8594; `AppImage`, `freebsd`, `pacman`, `rpm`, `deb`
 
-In this process, the action will be triggered and the previous command will open the `releases` and `actions` page in your browser. When the action is finished, you can click in the `releases` page and refresh it to see the draft release with the binaries, so you can edit it and release it for your users.
 
-https://user-images.githubusercontent.com/1149845/156939675-5ea0c510-ddd3-4de7-b293-87d3697bd1a8.mp4
 
 # <img src="./docs/images/bullet.svg" width="14" /> Source Code Protection
 > This process is done via [v8 bytecode compilation](https://nodejs.org/api/vm.html#vm_script_createcacheddata), to get more knowledge about it, please, [check the Electron Vite docs](https://evite.netlify.app/guide/source-code-protection.html).
